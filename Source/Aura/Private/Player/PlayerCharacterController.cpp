@@ -9,6 +9,33 @@ APlayerCharacterController::APlayerCharacterController( ) {
 	bReplicates = true;
 }
 
+void APlayerCharacterController::PlayerTick( float DeltaTime ) {
+	Super::PlayerTick( DeltaTime );
+
+	CursorTrace( );
+}
+
+void APlayerCharacterController::CursorTrace( ) {
+	FHitResult CursorHit;
+	GetHitResultUnderCursor( ECollisionChannel::ECC_Visibility, false, CursorHit );
+	if ( !CursorHit.bBlockingHit ) {
+		return;
+	}
+
+	LastActor = ThisActor;
+	ThisActor = CursorHit.GetActor( );
+
+	if ( ThisActor != LastActor ) {
+		if ( LastActor.GetInterface( ) ) {
+			LastActor->UnHighlightActor( );
+		}
+
+		if ( ThisActor.GetInterface( ) ) {
+			ThisActor->HighlightActor( );
+		}
+	}
+}
+
 void APlayerCharacterController::BeginPlay( ) {
 	Super::BeginPlay( );
 
