@@ -14,6 +14,10 @@ AMasterCharacter::AMasterCharacter()
 	SK_Weapon->SetCollisionEnabled( ECollisionEnabled::NoCollision );
 }
 
+UAbilitySystemComponent* AMasterCharacter::GetAbilitySystemComponent( ) const {
+	return AbilitySystemComponent;
+}
+
 // Called when the game starts or when spawned
 void AMasterCharacter::BeginPlay()
 {
