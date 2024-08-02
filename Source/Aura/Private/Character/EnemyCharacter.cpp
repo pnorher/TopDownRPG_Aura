@@ -3,6 +3,7 @@
 
 #include "Character/EnemyCharacter.h"
 #include "AbilitySystem/MasterAbilitySystemComponent.h"
+#include "AbilitySystem/MasterAttributeSet.h"
 #include "Aura/Aura.h"
 
 AEnemyCharacter::AEnemyCharacter( ) {
@@ -12,7 +13,7 @@ AEnemyCharacter::AEnemyCharacter( ) {
 	AbilitySystemComponent->SetIsReplicated( true );
 	AbilitySystemComponent->SetReplicationMode( EGameplayEffectReplicationMode::Minimal );
 
-	AttributeSet = CreateDefaultSubobject<UAttributeSet>( "AttributeSet" );
+	AttributeSet = CreateDefaultSubobject<UMasterAttributeSet>( "AttributeSet" );
 }
 
 void AEnemyCharacter::HighlightActor( ) {
