@@ -4,7 +4,9 @@
 #include "Character/PlayerCharacter.h"
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/PlayerCharacterController.h"
 #include "Player/PlayerCharacterState.h"
+#include "UI/HUD/MasterHUD.h"
 
 APlayerCharacter::APlayerCharacter( ) {
 	GetCharacterMovement( )->bOrientRotationToMovement = true;
@@ -37,4 +39,10 @@ void APlayerCharacter::InitAbilityActorInfo( ) {
 	PlayerCharacterState->GetAbilitySystemComponent( )->InitAbilityActorInfo( PlayerCharacterState, this );
 	AbilitySystemComponent = PlayerCharacterState->GetAbilitySystemComponent( );
 	AttributeSet = PlayerCharacterState->GetAttributeSet( );
+
+	if ( APlayerCharacterController* PlayerCharacterController = Cast<APlayerCharacterController>( GetController( ) ) ) {
+		if ( AMasterHUD* MasterHUD = Cast<AMasterHUD>( PlayerCharacterController->GetHUD( ) ) ) {
+			MasterHUD->InitOverlay( PlayerCharacterController, PlayerCharacterState, AbilitySystemComponent, AttributeSet );
+		}
+	}
 }
